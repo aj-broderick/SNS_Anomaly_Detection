@@ -8,6 +8,10 @@
         
 # SNS Anomaly Detection
 
+![Python](https://img.shields.io/badge/python-3.9-blue.svg)
+![Last Commit](https://img.shields.io/github/last-commit/aj-broderick/SNS_Anomaly_Detection)
+![License](https://img.shields.io/badge/license-Academic%20Use-lightgrey)
+
 </font>
 
 <div> 
@@ -15,6 +19,9 @@
 </div>
 
 </div>
+
+
+
 
 ## Project Overview
 This repository contains the codebase for an anomaly detection project at the Spallation Neutron Source (SNS), developed for the Old Dominion University Spring 2025 Capstone in collaboration with Jefferson Lab. The models aim to identify errant beam events that could damage accelerator equipment or cause downtime.
