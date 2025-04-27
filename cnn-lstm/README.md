@@ -5,7 +5,6 @@ This project implements a modular framework for an anomaly detector using a CNN+
 ## Installation
 
    ```bash
-   git clone SNS_Anomaly_Detection/cnn_lstm
    cd SNS_Anomaly_Detection/cnn_lstm
    pip install -r SNS_Anomaly_Detection/requirements.txt
    python ~/SNS_Anomaly_Detection/cnn_lstm/driver.py --train
