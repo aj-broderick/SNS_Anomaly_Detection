@@ -1,11 +1,10 @@
-# Variational Autoencoder with Bidirectional Long Short-Term Memory (VAE-BiLSTM)
+# Variational Autoencoder with Bidirectional Long Short-Term Memory<br>VAE-BiLSTM
 
 This project implements a modular framework for an anomaly detector using a VAE-BiLSTM model. The framework is structured into separate modules for data parsing, data preparation, model building, evaluation (with plots and metrics exported to PDF), and workflow orchestration. The project allows you to run the training or testing workflow through a single main entry point using command-line arguments including epochs, batch size, and threshold percentile for detecting anomaly.
 
 ## Installation
 
    ```bash
-   git clone SNS_Anomaly_Detection/vae-bilstm
    cd SNS_Anomaly_Detection/vae-bilstm
    pip install -r requirements.txt
    # Train:
