@@ -6,9 +6,9 @@ This project implements a modular framework for an anomaly detector using a CNN+
 
    ```bash
    cd SNS_Anomaly_Detection/cnn_lstm
-   pip install -r SNS_Anomaly_Detection/requirements.txt
-   python ~/SNS_Anomaly_Detection/cnn_lstm/driver.py --train
-   python ~/SNS_Anomaly_Detection/cnn_lstm/driver.py --test
+   pip install -r requirements.txt
+   python driver.py --train
+   python driver.py --test
    ```
 
 ## Project Structure
