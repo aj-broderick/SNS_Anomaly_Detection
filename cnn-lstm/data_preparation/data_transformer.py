@@ -4,13 +4,13 @@
 import pandas as pd
 import numpy as np
 import logging
-# from utils.logger import Logger
+from utils.logger import Logger
 from data_preparation.data_loader import DataLoad
 
 class DataMerger:
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
-        # loader = DataLoad()
+        loader = DataLoad()
     
     def merged_df(self):
         loader = DataLoad()
