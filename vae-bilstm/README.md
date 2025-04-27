@@ -1,11 +1,23 @@
-# Anomaly Detector Framework
+# Variational Autoencoder with Bidirectional Long Short-Term Memory (VAE-BiLSTM)
 
-Lorem Ipsum
+This project implements a modular framework for an anomaly detector using a VAE-BiLSTM model. The framework is structured into separate modules for data parsing, data preparation, model building, evaluation (with plots and metrics exported to PDF), and workflow orchestration. The project allows you to run the training or testing workflow through a single main entry point using command-line arguments including epochs, batch size, and threshold percentile for detecting anomaly.
+
+## Installation
+
+   ```bash
+   git clone SNS_Anomaly_Detection/vae-bilstm
+   cd SNS_Anomaly_Detection/vae-bilstm
+   pip install -r requirements.txt
+   # Train:
+   python driver.py train --epochs 5 --batch_size 8 --learning_rate 1e-4 --latent_dim 32 --model_path vae_bilstm_model.weights.h5 --tensorboard_logdir logs/fit
+   # Predict:
+   python driver.py predict --model_path vae_bilstm_model.weights.h5 --threshold_percentile 90
+   ```
 
 ## Project Structure
 
 ```
-sns_cnn_lstm
+vae-bilstm
 ├── data_preparation
 │    ├── data_loader.py
 │    ├── data_scaling.py
@@ -25,30 +37,16 @@ sns_cnn_lstm
 └── requirements.txt
 ```
 
-
-## Installation
-
-   ```bash
-   git clone SNS_Anomaly_Detection/cnn_lstm
-   cd SNS_Anomaly_Detection/cnn_lstm
-   pip install -r SNS_Anomaly_Detection/requirements.txt
-   python ~/SNS_Anomaly_Detection/cnn_lstm/driver.py --train
-   python ~/SNS_Anomaly_Detection/cnn_lstm/driver.py --test
-   ```
-
 ## Data Parser Modules
 
-- The BPM data configuration is now implemented in `data_parser/bpm_parser.py` (class `BPMDataConfig`).
-- The DCM data configuration is now implemented in `data_parser/dcm_config.py` (class `DCMDatConfig`).
-
+- To extract the data from it's raw form, the Beam Parameter Monitor (BPM) & Differential Current Monitor (DCM) configurations is implemented in `parser/configs.py` (classes  `BPMDataConfig` & `DCMDatConfig`).
 
 ## Logs and Reports 
 
-- **Logs are stored in the `logs/` directory:**
-  - Overall logs: `logs/app.log`
-  - Training logs: `logs/train_flow.log`
-  - Testing logs: `logs/test_flow.log`
+- **Logs are stored in individual folders (formatted as YYYYMMDD-HHMMSS) within the `logs/` directory:**
+  - Training logs: `logs/YYYYMMDD-HHMMSS/train`
+  - Validation logs: `logs/YYYYMMDD-HHMMSS/validation`
 
-- **Reports are exported as PDF:**
-  - Training report: `train_metrics_report.pdf`
-  - Testing report: `test_metrics_report.pdf`
+- **Visuals are saved in the folder once rum:**
+  - Time series plot of reconstruction error: `time_plot.png`
+  - Histogram of reconstruction errors: `dist_plot.png`
