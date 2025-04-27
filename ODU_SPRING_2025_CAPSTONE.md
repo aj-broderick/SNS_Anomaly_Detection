@@ -27,6 +27,7 @@
 ### <u>Model Overview & Findings</u>
 &emsp; Throughout the semester the team looked to implement more than one model to attempt to detect the anomalies. We tried to develop techniques that had not been documented as machine learning models that have been applied to the SNS data, to give a fresh perspective of insights. From this two models were developed and tested, an unsupervised model and a supervised model. The next section gives a high level description of the models and explores insights from the outputs.
 
+### <u>Model Specific Notes</u>
 #### ***VAE-BiLSTM***
 &emsp; The first model we explored was unsupervised, and utilized a blended model to process the data for anomaly detection, which was a Variable Autoencoder with Bilaterial Long-Short Term Memory. During initial research for machine learning models that excel in anomaly detection, the team came upon a paper for a team that used this model within the medical sector to detect anomalies in heart rates via data collected from wearable devices <sup>[1](https://doi.org/10.3390/bioengineering10060683)</sup>. The data that is collected from the SNS had patterns that were repeatable with each run, similar to how the heart rate data would come through, and determined that the model could generate insights on these patterns.\
 &emsp; The two segments of the VAE-BiLSTM model both aided in anomaly detection. Variable Autoencoders learn from a latent representation of data and attempts to reconstruct it, and a BiLSTM is a recurrent neural network that processes data in both forward and backward directions, capturing context from both past and future states. By combining these with the time series data of the SNS, the model would be able to look forward and backwards through the data as it attempts to reconstruct the latent data to determine if it was normal.\
@@ -166,25 +167,25 @@ scipy==1.13.1
 #### *Structure*
 
 ```    
-sns_2025
-├── config
-│   ├── bpm_config.py
-│   └── dcm_config.py
-├── data
-│   ├── data_preprocessor.py
-│   ├── beam_data_loader.py
-│   └── merge_datasets.py
+vae-bilstm
+├── data_preparation
+│    ├── data_loader.py
+│    ├── data_scaling.py
+│    └── data_transformer.py
 ├── factories
-│   ├── sns_raw_prep_sep_dnn_factory.py
-│   └── sns_raw_prep_sep_dnn_factory_updated.py
-├── models
-│   └── vae_bilstm.py
+│    └── sns_raw_prep_sep_dnn_factory.py
+├── model
+│    └── vae_bilstm.py
+├── parser
+│    └── configs.py
 ├── utils
-│   └── logger.py
-├── visualizations
-│   └── plots.py
+│    └── logger.py
+├── visualization
+│    └── plots.py
 ├── driver.py
+├── submit.sh
 └── requirements.txt
+
 ```
 
 #### *Installation & Execution*
@@ -201,26 +202,32 @@ python driver.py train --epochs 5 --batch_size 8 --learning_rate 1e-4 --latent_d
 python driver.py predict --model_path vae_bilstm_model.weights.h5 --threshold_percentile 90
 ```
 
-### <font color=#98C5EA>**[CNN LSTM](https://github.com/ashishodu2023/sns_cnn_lstm)**</font>
+### <font color=#98C5EA>**CNN-LSTM**</font>
 
 #### *Structure*
 
 ```         
-sns_cnn_lstm
+cnn-lstm
 ├── analysis
-│   └── evaluation.py
+│    └── evaluation.py
 ├── data_preparation
-│   ├── data_preprocessor.py
-│   └── data_scaling.py
+│    ├── data_loader.py
+│    ├── data_scaling.py
+│    └── data_transformer.py
 ├── model
-│   └── anomaly_model.py
+│    └── cnn_lstm_anomaly_model.py
 ├── parser
-│   ├── bpm_parser.py
-│   └── dcm_parser.py
-├── train_flow.py
-├── test_flow.py
-├── main.py
+│    └── configs.py
+├── testing
+│    └── test.py
+├── training
+│    └── train.py
+├── utils
+│    └── logger.py
+├── driver.py
+├── submit.sh
 └── requirements.txt
+
 ```
 
 #### Installation & Execution
