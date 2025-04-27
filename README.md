@@ -44,13 +44,12 @@ Two deep learning architectures were implemented:
     ```
 3. Install dependencies:
     ```bash
-    pip install -r sns_vae_bilstm/requirements.txt
-    pip install -r sns_cnn_lstm/requirements.txt
+    pip install -r vae_bilstm/requirements.txt
+    pip install -r cnn_lstm/requirements.txt
     ```
 
 ## Usage
-- For training and testing VAE-BiLSTM models, navigate to `sns_vae_bilstm/driver.py`.
-- For CNN-LSTM models, use `sns_cnn_lstm/main.py` along with `train_flow.py` and `test_flow.py`.
+- For training and testing models, navigate to `driver.py` files.
 
 ## Acknowledgments
 This project is a collaboration between Old Dominion University and Jefferson Lab. Special thanks to technical advisors Dr. Frank Liu and Kishansingh Rajput.
