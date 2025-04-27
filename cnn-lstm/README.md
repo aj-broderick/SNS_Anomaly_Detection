@@ -1,4 +1,4 @@
-# Convolutional Neural Network with Long Short Term Memory
+# Convolutional Neural Network with Long Short Term Memory<br>(CNN-LSTM)
 
 This project implements a modular framework for an anomaly detector using a CNN+LSTM model. The framework is structured into separate modules for data parsing, data preparation, model building, evaluation (with plots and metrics exported to PDF), and workflow orchestration. The project allows you to run the training or testing workflow through a single main entry point using command-line arguments.
 
