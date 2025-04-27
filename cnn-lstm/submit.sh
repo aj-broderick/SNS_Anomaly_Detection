@@ -13,6 +13,5 @@
 source /work/data_science/ODU_CAPSTONE_2025/sns_env/bin/activate
 
 # Run Python commands within the virtual environment
-
-python ~/ODU_CAPSTONE_2025/cnn_lstm/driver.py --train
-python ~/ODU_CAPSTONE_2025/cnn_lstm/driver.py --test
+python ~/SNS_Anomaly_Detection/cnn_lstm/driver.py --train
+python ~/SNS_Anomaly_Detection/cnn_lstm/driver.py --test
