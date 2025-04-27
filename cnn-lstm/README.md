@@ -1,11 +1,21 @@
-# Anomaly Detector Framework
+# Convolutional Neural Network with Long Short Term Memory
 
 This project implements a modular framework for an anomaly detector using a CNN+LSTM model. The framework is structured into separate modules for data parsing, data preparation, model building, evaluation (with plots and metrics exported to PDF), and workflow orchestration. The project allows you to run the training or testing workflow through a single main entry point using command-line arguments.
+
+## Installation
+
+   ```bash
+   git clone SNS_Anomaly_Detection/cnn_lstm
+   cd SNS_Anomaly_Detection/cnn_lstm
+   pip install -r SNS_Anomaly_Detection/requirements.txt
+   python ~/SNS_Anomaly_Detection/cnn_lstm/driver.py --train
+   python ~/SNS_Anomaly_Detection/cnn_lstm/driver.py --test
+   ```
 
 ## Project Structure
 
 ```
-sns_cnn_lstm
+cnn_lstm
 ├── analysis
 │    └── evaluation.py
 ├── data_preparation
@@ -27,22 +37,9 @@ sns_cnn_lstm
 └── requirements.txt
 ```
 
-
-## Installation
-
-   ```bash
-   git clone SNS_Anomaly_Detection/cnn_lstm
-   cd SNS_Anomaly_Detection/cnn_lstm
-   pip install -r SNS_Anomaly_Detection/requirements.txt
-   python ~/SNS_Anomaly_Detection/cnn_lstm/driver.py --train
-   python ~/SNS_Anomaly_Detection/cnn_lstm/driver.py --test
-   ```
-
 ## Data Parser Modules
 
-- The BPM data configuration is now implemented in `data_parser/bpm_parser.py` (class `BPMDataConfig`).
-- The DCM data configuration is now implemented in `data_parser/dcm_config.py` (class `DCMDatConfig`).
-
+- To extract the data from it's raw form, the Beam Parameter Monitor (BPM) & Differential Current Monitor (DCM) configurations is implemented in `parser/configs.py` (classes  `BPMDataConfig` & `DCMDatConfig`).
 
 ## Logs and Reports 
 
