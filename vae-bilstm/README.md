@@ -44,6 +44,14 @@ vae-bilstm
 
 - To extract the data from it's raw form, the Beam Parameter Monitor (BPM) & Differential Current Monitor (DCM) configurations is implemented in `parser/configs.py` (classes  `BPMDataConfig` & `DCMDatConfig`).
 
+## Data Preparation
+
+- Due to limited time and resources, the model was trained on a small subset of data based on the beam parameter settings. To remove this filter to train and test on the full dataset, the following lines of code can be removed from the `factories\sns_raw_prep_sep_dnn_factory.py` file:
+```bash
+merged_df = grouper.filegroup(merged_df)
+merged_df = merged_df[merged_df['group'] == 0]
+```
+
 ## Enterprise Tools
 
 - This folder works under the assumption that the user is executing the code outside of the Jefferson Lab environment and needs access to custom classes that were developed for unpacking SNS data from binary format. Files include:
