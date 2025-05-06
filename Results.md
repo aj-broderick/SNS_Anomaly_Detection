@@ -6,7 +6,7 @@
 
 <div align="center"> <font color=#003057>
         
-# Data Science Capstone Project Spring 2025 
+# Machine Learning & Anomaly Detection at the Spallation Neutron Source Accelerator
 
 </font>
 
@@ -19,7 +19,7 @@
 
 
 ## Scope
-&emsp;The Spallation Neutron Source (SNS) at Oak Ridge National Laboratory is a world-leading facility for neutron scattering research, providing unprecedented insights into the structure and dynamics of materials. As a highly complex and high-throughput scientific instrument, the SNS involves numerous subsystems—ranging from high-powered accelerators to cryogenic systems and neutron detectors—all of which must operate within strict performance and safety margins. The ability to detect anomalies in these systems promptly and accurately is critical for ensuring experimental integrity, maintaining uptime, and protecting equipment.
+&emsp;The Spallation Neutron Source (SNS) at Oak Ridge National Laboratory is a world-leading facility for neutron scattering research, providing insights into the structure and dynamics of materials. As a complex and high-throughput scientific instrument, the ability to detect anomalies in these systems promptly and accurately is critical for ensuring experimental integrity, maintaining uptime, and protecting equipment.
 
 &emsp; This report explores the application of machine learning (ML) techniques for anomaly detection within the SNS environment. By leveraging historical sensor data, waveform signals, and system logs, machine learning models—especially those using deep learning architectures—offer the potential to identify subtle, non-obvious deviations from normal operational patterns. These methods can supplement or even surpass traditional rule-based monitoring by learning complex patterns and adapting to system evolution over time. The scope of this investigation includes the selection of appropriate algorithms, data preprocessing strategies, model evaluation metrics, and integration considerations within the SNS control infrastructure.
 
@@ -30,8 +30,19 @@
 ### VAE-BiLSTM
 <img src="media/cnn_lstm_architecture.png" alt="CNN-LSTM architecture">
 
-## Data analysis
+## Data Analysis
+&emsp; The September 2024 data from the SNS comprised multiple sources collected across different subsystems, primarily focusing on the Differential Current Monitor (DCM) and Beam Position Monitor (BPM) channels. These datasets are currently housed separately, thus preprocessing and integration pipeline was established to prepare the dataset for downstream anomaly detection modeling.
 
+**Parsing Binary Format Data**\
+&emsp; Raw data files were originally stored in a custom binary and to extract the information, a dedicated parser was implemented using Python provided by the Jefferson Lab. The parser decoded binary streams into structured arrays, each associated with timestamps, signal amplitudes, and relevant metadata such as channel IDs and acquisition parameters. 
+
+**Merging DCM and BPM Data**\
+&emsp; After successful parsing, DCM and BPM datasets were merged based on their timestamp alignment. As the data rates and acquisition intervals differed slightly between systems, time-series interpolation and resampling techniques were applied to synchronize the signals. A unified schema was defined wherein each data point represented a composite snapshot of DCM and BPM values for a given moment in time. This merge allowed the model to capture correlations between beam behavior (BPM) and system drift (DCM), enriching the feature space for more accurate anomaly detection.
+
+**Addressing Class Imbalance with SMOTE**\
+&emsp; An initial analysis of the labeled dataset revealed a significant class imbalance, with anomalous instances representing a small fraction of the total records. To mitigate this, the Synthetic Minority Over-sampling Technique (SMOTE) was applied. SMOTE synthetically generates new samples for the minority class by interpolating between existing examples. This was executed after merging and normalization to ensure data compatibility. The resulting dataset maintained a more balanced class distribution, which helped improve model generalization and reduced the bias toward the majority (normal) class during training.
+
+This preprocessed and augmented dataset forms the foundation for subsequent model training and evaluation, enabling more robust detection of subtle and rare anomalies within the SNS operational environment.
 
 ## Current Model Architecture 
 
@@ -103,12 +114,13 @@ cnn-lstm
 
 ## Pros and Cons
 
-### VAE-BiLSTM
 <table> <tr> 
-<th>Pros</th><th>Cons</th>
+<th></th><th>Pros</th><th>Cons</th>
 </tr>
         
-<tr><td><pre>
+<tr>
+<td>VAE-BiLSTM</td>   
+<td><pre>
 + Temporal Dependencies
 + Probabilistic Latent Space
 + Sequence Variability
@@ -121,14 +133,10 @@ cnn-lstm
 - Interpretation 
 - Data Requirements
 </pre></td></tr>
-</table>
 
-### CNN-LSTM
-<table> <tr> 
-<th>Pros</th><th>Cons</th>
-</tr>
-        
-<tr><td><pre>
+<tr>
+<td>CNN-LSTM</td>   
+<td><pre>
 + Feature Extraction
 + Temporal Modeling
 + Dimensionality Reduction
@@ -139,13 +147,16 @@ cnn-lstm
 <td><pre>
 - Spatial Bias
 - Fixed Kernal Size
--Sequence Length 
+- Sequence Length 
 - Architecture Tuning
 
 </pre></td></tr>
+
 </table>
 
-## Future Enchantments
+## Future Enhancements
+
+
 ## References
 *Staffini, A., Svensson, T., Chung, U.-i., & Svensson, A. K. (2023). A Disentangled VAE-BiLSTM Model for Heart Rate Anomaly Detection. Bioengineering, 10(6), 683. https://doi.org/10.3390/bioengineering10060683*
 
