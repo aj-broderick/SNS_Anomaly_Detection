@@ -30,6 +30,96 @@
 ### VAE-BiLSTM
 <img src="media/cnn_lstm_architecture.png" alt="CNN-LSTM architecture">
 
+# VAE-BiLSTM Model – End-to-End Explanation
+
+##  Overview
+
+**VAE-BiLSTM** is a hybrid deep learning architecture that combines:
+
+- **Variational Autoencoder (VAE)** for learning compressed latent representations.
+- **Bidirectional LSTM (BiLSTM)** for modeling temporal dependencies in sequential data.
+
+This architecture is particularly suited for **unsupervised anomaly detection in time-series data**.
+
+---
+
+##  Architecture Breakdown
+
+### 1. Variational Autoencoder (VAE)
+
+####  Purpose
+- Learns the underlying distribution of the input data.
+- Encodes inputs into a **latent space**, allowing reconstruction of normal patterns.
+
+####  Components
+- **Encoder**: Outputs `μ` and `σ²` for a probabilistic latent representation.
+- **Latent Sampling**: 
+  \[
+  z = \mu + \sigma \cdot \epsilon, \quad \text{where } \epsilon \sim \mathcal{N}(0, 1)
+  \]
+- **Decoder**: Reconstructs the input from the latent vector `z`.
+
+####  Loss Function
+\[
+\mathcal{L}_{VAE} = \text{Reconstruction Loss} + \beta \cdot \text{KL Divergence}
+\]
+- **Reconstruction Loss**: MSE or MAE between original and reconstructed input.
+- **KL Divergence**: Penalizes deviation from standard normal distribution in latent space.
+
+---
+
+### 2. Bidirectional LSTM (BiLSTM)
+
+####  Purpose
+- Captures temporal dependencies **in both forward and backward directions**.
+
+####  Components
+- Two LSTM layers (forward and backward).
+- Concatenated output for richer context.
+- Optional: dense classification layer for supervised anomaly score.
+
+---
+
+##  Combined VAE-BiLSTM Flow
+
+```text
+           Input Sequence
+                │
+        ┌───────▼────────┐
+        │     Encoder     │   ← VAE
+        │(Conv1D/FC → μ,σ)│
+        └───────┬────────┘
+                │
+     Reparameterization Trick
+                │
+           Latent Vector z
+                │
+        ┌───────▼────────┐
+        │     Decoder     │   ← VAE
+        │  (FC or Conv1D) │
+        └───────┬────────┘
+                │
+        Reconstructed Sequence
+                │
+        ┌───────▼────────┐
+        │     BiLSTM     │   ← BiLSTM
+        └───────┬────────┘
+                │
+           Output Layer
+                │
+          Anomaly Score / Label
+
+## Anomaly Detection Strategy
+* Train the model on normal data.
+* During inference, compute:
+* Reconstruction Error: High error indicates anomaly.
+* Latent Distance: e.g., Mahalanobis distance in latent space.
+* Sequence-based Anomaly Score from BiLSTM.
+
+## Loss Function
+loss = reconstruction_loss + beta * kl_loss + sequence_loss
+
+
 ## Data Analysis
 &emsp; The September 2024 data from the SNS comprised multiple sources collected across different subsystems, primarily focusing on the Differential Current Monitor (DCM) and Beam Position Monitor (BPM) channels. These datasets are currently housed separately, thus preprocessing and integration pipeline was established to prepare the dataset for downstream anomaly detection modeling.
 
