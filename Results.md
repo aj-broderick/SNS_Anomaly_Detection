@@ -109,6 +109,7 @@ This architecture is particularly suited for **unsupervised anomaly detection in
                 │
           Anomaly Score / Label
 
+``` 
 ## Anomaly Detection Strategy
 * Train the model on normal data.
 * During inference, compute:
