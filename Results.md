@@ -60,9 +60,7 @@ This architecture is particularly suited for **unsupervised anomaly detection in
 - **Decoder**: Reconstructs the input from the latent vector `z`.
 
 ####  Loss Function
-\[
-\mathcal{L}_{VAE} = \text{Reconstruction Loss} + \beta \cdot \text{KL Divergence}
-\]
+[ \mathcal{L}_{VAE} = \text{Reconstruction Loss} + \beta \cdot \text{KL Divergence} ]
 - **Reconstruction Loss**: MSE or MAE between original and reconstructed input.
 - **KL Divergence**: Penalizes deviation from standard normal distribution in latent space.
 
