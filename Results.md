@@ -27,11 +27,6 @@
 ### VAE-BiLSTM
 <img src="media/vae_bilstm_architecture.png" alt="VAE-BiLSTM architecture">
 
-### VAE-BiLSTM
-<img src="media/cnn_lstm_architecture.png" alt="CNN-LSTM architecture">
-
-# VAE-BiLSTM Model – End-to-End Explanation
-
 ##  Overview
 
 **VAE-BiLSTM** is a hybrid deep learning architecture that combines:
@@ -40,8 +35,6 @@
 - **Bidirectional LSTM (BiLSTM)** for modeling temporal dependencies in sequential data.
 
 This architecture is particularly suited for **unsupervised anomaly detection in time-series data**.
-
----
 
 ##  Architecture Breakdown
 
@@ -77,24 +70,24 @@ $\mathcal{L}_{VAE} = \text{Reconstruction Loss} + \beta \cdot \text{KL Divergenc
 
 ---
 
-##  Combined VAE-BiLSTM Flow
+###  Combined VAE-BiLSTM Flow
 
 ```text
            Input Sequence
                 │
-        ┌───────▼────────┐
+        ┌───────▼─────────┐
         │     Encoder     │   ← VAE
         │(Conv1D/FC → μ,σ)│
-        └───────┬────────┘
+        └───────┬─────────┘
                 │
      Reparameterization Trick
                 │
            Latent Vector z
                 │
-        ┌───────▼────────┐
+        ┌───────▼─────────┐
         │     Decoder     │   ← VAE
         │  (FC or Conv1D) │
-        └───────┬────────┘
+        └───────┬─────────┘
                 │
         Reconstructed Sequence
                 │
@@ -107,16 +100,20 @@ $\mathcal{L}_{VAE} = \text{Reconstruction Loss} + \beta \cdot \text{KL Divergenc
           Anomaly Score / Label
 
 ``` 
-## Anomaly Detection Strategy
+### Anomaly Detection Strategy
 * Train the model on normal data.
 * During inference, compute:
 * Reconstruction Error: High error indicates anomaly.
 * Latent Distance: e.g., Mahalanobis distance in latent space.
 * Sequence-based Anomaly Score from BiLSTM.
 
-## Loss Function
-loss = reconstruction_loss + beta * kl_loss + sequence_loss
+### Loss Function
+loss = reconstruction_loss + beta * kl_loss + sequence_loss\
 
+---
+
+### CNN-LSTM
+<img src="media/cnn_lstm_architecture.png" alt="CNN-LSTM architecture">
 
 ## Data Analysis
 &emsp; The September 2024 data from the SNS comprised multiple sources collected across different subsystems, primarily focusing on the Differential Current Monitor (DCM) and Beam Position Monitor (BPM) channels. These datasets are currently housed separately, thus preprocessing and integration pipeline was established to prepare the dataset for downstream anomaly detection modeling.
@@ -126,6 +123,9 @@ loss = reconstruction_loss + beta * kl_loss + sequence_loss
 
 **Merging DCM and BPM Data**\
 &emsp; After successful parsing, DCM and BPM datasets were merged based on their timestamp alignment. As the data rates and acquisition intervals differed slightly between systems, time-series interpolation and resampling techniques were applied to synchronize the signals. A unified schema was defined wherein each data point represented a composite snapshot of DCM and BPM values for a given moment in time. This merge allowed the model to capture correlations between beam behavior (BPM) and system drift (DCM), enriching the feature space for more accurate anomaly detection.
+
+**Subsampling Data**\
+&emsp; Once the data was merged into a single dataset, the team had decided to work with a subset of the data, given the short time parameter of the semester. By looking at the timestamps of the tracings, the file were grouped if the BPM settings matched the previous file. If there was a change in any of the beam settings, which was often done for fine tuning the beam, it was treated as a new grouping of tracing files. For the use of the this report and analysis, the first group of settings in September 2024 was used, giving over 1,400 files to utilize for the training and testing.
 
 **Addressing Class Imbalance with SMOTE**\
 &emsp; An initial analysis of the labeled dataset revealed a significant class imbalance, with anomalous instances representing a small fraction of the total records. To mitigate this, the Synthetic Minority Over-sampling Technique (SMOTE) was applied. SMOTE synthetically generates new samples for the minority class by interpolating between existing examples. This was executed after merging and normalization to ensure data compatibility. The resulting dataset maintained a more balanced class distribution, which helped improve model generalization and reduced the bias toward the majority (normal) class during training.
@@ -243,7 +243,13 @@ cnn-lstm
 </table>
 
 ## Future Enhancements
+&emsp; As mentioned earlier in the report, the team was not able to achieve all of the goals that were set out throughout our time in the semester. If there team were able to continue with improve on the models that were developed, there would be some areas that would be addressed, including: 
 
+**Model Refinement**\
+&emsp; One key feature that could be done for refining the model is opening up the amount of data that is fed into them. This increased amount of data would hopefully be able to account for the nuances that exist within the data and ultimately produce a better model. For both of the models, there are parameters that could be adjusted and would change the resulting weights and outcomes. Given more time, the team would have developed additional code that could optimize the various parameters to produce the best model that it could with the data. 
+
+**Real-time Deployment**\
+&emsp; The ultimate goal of the this research is the develop a model that can assist in detecting the errant beams at the SNS. If after refining the model showcased results that aligned with Oak Ridge's requirements, the models could be implemented into their processes and be used in day-to-day operations.
 
 ## JLab/ODU Capstone Recommendations
 
@@ -252,17 +258,17 @@ cnn-lstm
 
 <font color=#4348DD>
 
-  * The team's recommendation for future capstone projects would be to get the submission of documents and required IT trainings in Week 1. If an SOP specifically to students working with the Jefferson Lab could be developed containing the different steps and requirements needed, it could be distributed as soon as the teams are developed. This would speep up timing of getting students into the data, and give more time for data analysis and model development
+  * The team's recommendation for future capstone projects would be to get the submission of documents and required IT trainings in Week 1. If an SOP specifically to students working with the Jefferson Lab could be developed containing the different steps and requirements needed, it could be distributed as soon as the teams are developed. This would speed up timing of getting students into the data, and give more time for data analysis and model development
 
 </font>
 
 ### <u>iFarm & slurm</u>
-&emsp; Similiar to accessing the data, one challenge that the team faced was running large scale models in the JLab environment once the models were developed in the Jupyter Notebooks. There was some trial and error that occurred when attempting to get the environment up and running in which to execute the code. Kishan did a great job in finding a solution that worked and in providing some documentation once issues were resolved 
+&emsp; Similar to accessing the data, one challenge that the team faced was running large scale models in the JLab environment once the models were developed in the Jupyter Notebooks. There was some trial and error that occurred when attempting to get the environment up and running in which to execute the code. Kishan did a great job in finding a solution that worked and in providing some documentation once issues were resolved 
 
 <font color=#4348DD>
         
   * Expanding on the previous recommendation of an SOP for ODU students, there should be a JLab version that walks through the steps that would be required to create a shared folder and the required code/sub-folders for the teams to execute the code
-  * Another thing that would be benefical for future ODU students would be guidelines and explinations on bits of code that we're able to change for submitting batches to slurm. We were hesitant to change too much to avoid causing downstream impacts on JLab processing cores by accidently overindexing on resources
+  * Another thing that would be beneficial for future ODU students would be guidelines and explanations on bits of code that we're able to change for submitting batches to slurm. We were hesitant to change too much to avoid causing downstream impacts on JLab processing cores by accidently overindexing on resources
     
 </font>
 
