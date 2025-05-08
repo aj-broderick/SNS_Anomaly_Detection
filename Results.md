@@ -54,9 +54,9 @@ This architecture is particularly suited for **unsupervised anomaly detection in
 ####  Components
 - **Encoder**: Outputs `μ` and `σ²` for a probabilistic latent representation.
 - **Latent Sampling**: 
-  \[
-  z = \mu + \sigma \cdot \epsilon, \quad \text{where } \epsilon \sim \mathcal{N}(0, 1)
-  \]
+ $$
+ z = \mu + \sigma \cdot \epsilon, \quad \text{where } \epsilon \sim \mathcal{N}(0, 1)
+$$
 - **Decoder**: Reconstructs the input from the latent vector `z`.
 
 ####  Loss Function
